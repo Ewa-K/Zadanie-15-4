@@ -1,0 +1,29 @@
+body {
+	margin: 0 auto;
+	padding: 30px 20%;
+	background-color: #c1e6f3;
+}
+
+.controls, .stopwatch {
+	background-color: #305b7d;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.stopwatch {
+	color: #fff;
+	padding: 10px 0 15px 0;
+	font-size: 38px;
+}
+
+.controls {
+	padding-top: 15px;
+}
+
+.controls a {
+	color: #fff;
+	text-decoration: none;
+	padding: 20px;
+	font-weight: bold;
+	font-size: 18px;
+}
