@@ -1,5 +1,5 @@
 
-class Stopwatch extends React.Component {
+class App extends React.Component {
     constructor(display) {
         super(display);
         this.running = false;
@@ -55,15 +55,28 @@ class Stopwatch extends React.Component {
     }
 
     render() {
-        const stopwatch = new Stopwatch(
-            document.querySelector('.stopwatch'));
 
-        let startButton = document.getElementById('start');
-        startButton.addEventListener('click', () => stopwatch.start());
-
-        let stopButton = document.getElementById('stop');
-        stopButton.addEventListener('click', () => stopwatch.stop());
-
+    return (
+        <div>
+            <nav className="controls">
+                <a 
+                    href="#" 
+                    className="button" 
+                    id="start"
+                    onClick={this.start}>
+                    Start
+                </a>
+                <a 
+                    href="#" className="button" 
+                    id="stop"
+                    onClick={this.stop}>
+                    Stop
+                </a>
+            </nav>
+            <div className="stopwatch"></div>
+            <ul className="results"></ul>
+        </div>
+    );
     }
 }
 

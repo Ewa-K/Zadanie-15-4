@@ -1,2 +1,3 @@
-var element = React.createElement(app-compiled);
-ReactDOM.render(element, document.getElementById('stopwatch'));
+
+var element = React.createElement(App);
+ReactDOM.render(element, document.getElementById('app'));
