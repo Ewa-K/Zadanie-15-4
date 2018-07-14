@@ -11,14 +11,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
-    function App(display) {
+    function App(props) {
         _classCallCheck(this, App);
 
-        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, display));
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
             running: false,
-            display: display,
             times: {
                 minutes: 0,
                 seconds: 0,
@@ -27,7 +26,6 @@ var App = function (_React$Component) {
         };
 
         _this.reset = _this.reset.bind(_this);
-        _this.print = _this.print.bind(_this);
         _this.format = _this.format.bind(_this);
         _this.start = _this.start.bind(_this);
         _this.step = _this.step.bind(_this);
@@ -47,13 +45,8 @@ var App = function (_React$Component) {
             this.setState({ times: times });
         }
     }, {
-        key: "print",
-        value: function print() {
-            this.props.display.innerText = this.format(this.state.times);
-        }
-    }, {
         key: "format",
-        value: function format(times) {
+        value: function format() {
             return pad0(this.state.times.minutes) + ":" + pad0(this.state.times.seconds) + ":" + pad0(Math.floor(this.state.times.miliseconds));
         }
     }, {
@@ -61,8 +54,9 @@ var App = function (_React$Component) {
         value: function start() {
             var _this2 = this;
 
-            if (!this.running) {
-                this.running = true;
+            if (!this.state.running) {
+                var running = true;
+                this.setState({ running: running });
                 this.watch = setInterval(function () {
                     return _this2.step();
                 }, 10);
@@ -71,9 +65,9 @@ var App = function (_React$Component) {
     }, {
         key: "step",
         value: function step() {
-            if (!this.running) return;
-            this.calculate();
-            this.print();
+            if (this.state.running) {
+                this.calculate();
+            }
         }
     }, {
         key: "calculate",
@@ -91,7 +85,8 @@ var App = function (_React$Component) {
     }, {
         key: "stop",
         value: function stop() {
-            this.running = false;
+            var running = false;
+            this.setState({ running: running });
             clearInterval(this.watch);
         }
     }, {
@@ -125,7 +120,7 @@ var App = function (_React$Component) {
                         "a",
                         {
                             href: "#", className: "button",
-                            id: "stop",
+                            id: "reset",
                             onClick: this.reset },
                         "Reset"
                     )
@@ -133,7 +128,6 @@ var App = function (_React$Component) {
                 React.createElement(
                     "div",
                     { className: "stopwatch" },
-                    " ",
                     " "
                 ),
                 React.createElement("ul", { className: "results" })

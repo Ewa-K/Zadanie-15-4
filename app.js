@@ -1,10 +1,9 @@
 
 class App extends React.Component {
-    constructor(display) {
-        super(display);
+    constructor(props) {
+        super(props);
         this.state = {
             running: false,
-            display: display,
             times: {
                 minutes: 0,
                 seconds: 0,
@@ -13,7 +12,6 @@ class App extends React.Component {
         }
 
         this.reset = this.reset.bind(this)
-        this.print = this.print.bind(this)
         this.format = this.format.bind(this)
         this.start = this.start.bind(this)
         this.step = this.step.bind(this)
@@ -30,25 +28,22 @@ class App extends React.Component {
         this.setState({times})
     }
 
-   print() {
-        this.props.display.innerText = this.format(this.state.times);
-    }
-
-    format(times) {
+    format() {
         return `${pad0(this.state.times.minutes)}:${pad0(this.state.times.seconds)}:${pad0(Math.floor(this.state.times.miliseconds))}`;
     }
 
     start() {
-        if (!this.running) {
-            this.running = true;
+        if (!this.state.running) {
+            let running = true;
+            this.setState({running})
             this.watch = setInterval(() => this.step(), 10);
         }
     }
 
     step() {
-        if (!this.running) return;
+        if (this.state.running) {
         this.calculate();
-        this.print();
+        }
     }
 
     calculate() {
@@ -64,7 +59,8 @@ class App extends React.Component {
     }
 
     stop() {
-        this.running = false;
+        let running = false;
+        this.setState({running})
         clearInterval(this.watch);
     }
 
@@ -88,12 +84,12 @@ class App extends React.Component {
                     </a>
                     <a 
                         href="#" className="button" 
-                        id="stop"
+                        id="reset"
                         onClick={this.reset}>
                         Reset
                     </a>
                 </nav>
-                <div className="stopwatch"> {} </div>
+                <div className="stopwatch"> </div>
                 <ul className="results"></ul>
             </div>
         );
