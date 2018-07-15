@@ -8,7 +8,8 @@ class App extends React.Component {
                 minutes: 0,
                 seconds: 0,
                 miliseconds: 0
-            }
+            },
+            watch: ''
         }
 
         this.reset = this.reset.bind(this)
@@ -35,8 +36,8 @@ class App extends React.Component {
     start() {
         if (!this.state.running) {
             let running = true;
-            this.setState({running})
-            this.watch = setInterval(() => this.step(), 10);
+            let watch = setInterval(this.step, 10);
+            this.setState({running, watch})
         }
     }
 
@@ -47,21 +48,33 @@ class App extends React.Component {
     }
 
     calculate() {
-        this.state.times.miliseconds += 1;
+        let times = {
+            minutes: this.state.times.minutes,
+            seconds: this.state.times.seconds,
+            miliseconds: this.state.times.miliseconds += 1
+        }
+        this.setState({times})
         if (this.state.times.miliseconds >= 100) {
-            this.state.times.seconds += 1;
-            this.state.times.miliseconds = 0;
+            let times = {
+            minutes: this.state.times.minutes,
+            seconds: this.state.times.seconds += 1,
+            miliseconds: 0
+            }
+            this.setState({times})       
         }
         if (this.state.times.seconds >= 60) {
-            this.state.times.minutes += 1;
-            this.state.times.seconds = 0;
+            let times = {
+            minutes: this.state.times.minutes += 1,
+            seconds: 0,
+            miliseconds: this.state.times.miliseconds
+            }
+            this.setState({times})   
         }
     }
 
     stop() {
         let running = false;
-        this.setState({running})
-        clearInterval(this.watch);
+        this.setState({running, watch: clearInterval(this.state.watch)});
     }
 
     render() {
@@ -89,7 +102,7 @@ class App extends React.Component {
                         Reset
                     </a>
                 </nav>
-                <div className="stopwatch"> </div>
+                <div className="stopwatch"> {this.format()} </div>
                 <ul className="results"></ul>
             </div>
         );

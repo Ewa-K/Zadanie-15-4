@@ -22,7 +22,8 @@ var App = function (_React$Component) {
                 minutes: 0,
                 seconds: 0,
                 miliseconds: 0
-            }
+            },
+            watch: ''
         };
 
         _this.reset = _this.reset.bind(_this);
@@ -52,14 +53,10 @@ var App = function (_React$Component) {
     }, {
         key: "start",
         value: function start() {
-            var _this2 = this;
-
             if (!this.state.running) {
                 var running = true;
-                this.setState({ running: running });
-                this.watch = setInterval(function () {
-                    return _this2.step();
-                }, 10);
+                var watch = setInterval(this.step, 10);
+                this.setState({ running: running, watch: watch });
             }
         }
     }, {
@@ -72,22 +69,34 @@ var App = function (_React$Component) {
     }, {
         key: "calculate",
         value: function calculate() {
-            this.state.times.miliseconds += 1;
+            var times = {
+                minutes: this.state.times.minutes,
+                seconds: this.state.times.seconds,
+                miliseconds: this.state.times.miliseconds += 1
+            };
+            this.setState({ times: times });
             if (this.state.times.miliseconds >= 100) {
-                this.state.times.seconds += 1;
-                this.state.times.miliseconds = 0;
+                var _times = {
+                    minutes: this.state.times.minutes,
+                    seconds: this.state.times.seconds += 1,
+                    miliseconds: 0
+                };
+                this.setState({ times: _times });
             }
             if (this.state.times.seconds >= 60) {
-                this.state.times.minutes += 1;
-                this.state.times.seconds = 0;
+                var _times2 = {
+                    minutes: this.state.times.minutes += 1,
+                    seconds: 0,
+                    miliseconds: this.state.times.miliseconds
+                };
+                this.setState({ times: _times2 });
             }
         }
     }, {
         key: "stop",
         value: function stop() {
             var running = false;
-            this.setState({ running: running });
-            clearInterval(this.watch);
+            this.setState({ running: running, watch: clearInterval(this.state.watch) });
         }
     }, {
         key: "render",
@@ -128,6 +137,8 @@ var App = function (_React$Component) {
                 React.createElement(
                     "div",
                     { className: "stopwatch" },
+                    " ",
+                    this.format(),
                     " "
                 ),
                 React.createElement("ul", { className: "results" })
