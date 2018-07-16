@@ -53,23 +53,21 @@ class App extends React.Component {
             seconds: this.state.times.seconds,
             miliseconds: this.state.times.miliseconds += 1
         }
-        this.setState({times})
         if (this.state.times.miliseconds >= 100) {
             let times = {
             minutes: this.state.times.minutes,
             seconds: this.state.times.seconds += 1,
             miliseconds: 0
-            }
-            this.setState({times})       
+            }       
         }
         if (this.state.times.seconds >= 60) {
             let times = {
             minutes: this.state.times.minutes += 1,
             seconds: 0,
             miliseconds: this.state.times.miliseconds
-            }
-            this.setState({times})   
+            } 
         }
+        this.setState({times}) 
     }
 
     stop() {

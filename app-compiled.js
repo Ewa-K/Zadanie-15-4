@@ -74,14 +74,12 @@ var App = function (_React$Component) {
                 seconds: this.state.times.seconds,
                 miliseconds: this.state.times.miliseconds += 1
             };
-            this.setState({ times: times });
             if (this.state.times.miliseconds >= 100) {
                 var _times = {
                     minutes: this.state.times.minutes,
                     seconds: this.state.times.seconds += 1,
                     miliseconds: 0
                 };
-                this.setState({ times: _times });
             }
             if (this.state.times.seconds >= 60) {
                 var _times2 = {
@@ -89,8 +87,8 @@ var App = function (_React$Component) {
                     seconds: 0,
                     miliseconds: this.state.times.miliseconds
                 };
-                this.setState({ times: _times2 });
             }
+            this.setState({ times: times });
         }
     }, {
         key: "stop",
