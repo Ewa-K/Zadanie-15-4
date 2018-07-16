@@ -72,20 +72,20 @@ var App = function (_React$Component) {
             var times = {
                 minutes: this.state.times.minutes,
                 seconds: this.state.times.seconds,
-                miliseconds: this.state.times.miliseconds + 1
+                miliseconds: this.state.times.miliseconds
             };
-            this.setState({ times: times });
 
-            if (this.state.times.miliseconds >= 100) {
-                this.state.times.seconds += 1;
-                this.state.times.miliseconds = 0;
-                this.setState({ times: times });
+            times.miliseconds += 1;
+
+            if (times.miliseconds >= 100) {
+                times.seconds += 1;
+                times.miliseconds = 0;
             }
-            if (this.state.times.seconds >= 60) {
-                this.state.times.minutes += 1;
-                this.state.times.seconds = 0;
-                this.setState({ times: times });
+            if (times.seconds >= 60) {
+                times.minutes += 1;
+                times.seconds = 0;
             }
+            this.setState({ times: times });
         }
     }, {
         key: "stop",
